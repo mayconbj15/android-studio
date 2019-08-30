@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Conversor Temperatura</string>
+    <string name="digite_a_temperatura">Digite a temperatura</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="celsius">Celsius</string>
+    <string name="reaumur">Reaumur</string>
+    <string name="rankine">Rankine</string>
+    <string name="kelvin">Kelvin</string>
+    <string name="resultado">Resultado</string>
+</resources>
