@@ -14,5 +14,7 @@
     <string name="entra_na_barrinha_lateral_a_man">ENTRA NA BARRINHA LATERAL AÍ MAN</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">OLÁ! VAMOS JOGAR?</string>
+    <string name="mensagemNerd">É só acessar a barra lateral ;)</string>
+    <string name="textoprincipal">TextoPrincipal</string>
 </resources>

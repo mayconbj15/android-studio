@@ -10,24 +10,41 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="garai" />
-
     <fragment
         android:id="@+id/fragment"
-        android:name="com.example.games.FragmentAdivinha"
+        android:name="com.example.games.BlankFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <fragment
-        android:id="@+id/fragment2"
-        android:name="com.example.games.FragmentAnimais"
+    <ImageView
+        android:id="@+id/imageViewNerd"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:contentDescription="@string/textoprincipal"
+        android:src="@drawable/nerd" />
+
+    <TextView
+        android:id="@+id/mainText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="-10dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginTop="-55dp"
+        android:text="@string/hello_blank_fragment"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:text="@string/mensagemNerd"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>
