@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,41 +11,13 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+
+    <!-- TODO: Update blank fragment layout -->
+
     <fragment
         android:id="@+id/fragment"
         android:name="com.example.games.BlankFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:id="@+id/imageViewNerd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:contentDescription="@string/textoprincipal"
-        android:src="@drawable/nerd" />
-
-    <TextView
-        android:id="@+id/mainText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="-10dp"
-        android:layout_marginLeft="-10dp"
-        android:layout_marginTop="-55dp"
-        android:text="@string/hello_blank_fragment"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/messageText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="150dp"
-        android:text="@string/mensagemNerd"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

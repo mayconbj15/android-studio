@@ -84,17 +84,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void removeFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction().remove(fragment);
-    }
-
     public void clearActivity(){
-        TextView textView = findViewById(R.id.mainText);
+        /*TextView textView = findViewById(R.id.mainText);
         TextView textView2 = findViewById(R.id.messageText);
         ImageView imageView = findViewById(R.id.imageViewNerd);
 
         textView.setVisibility(View.INVISIBLE);
         textView2.setVisibility(View.INVISIBLE);
-        imageView.setVisibility(View.INVISIBLE);
+        imageView.setVisibility(View.INVISIBLE);*/
     }
 }

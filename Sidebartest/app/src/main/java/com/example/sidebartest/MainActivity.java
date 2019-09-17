@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.sidebartest.ui.gallery.GalleryFragment;
+import com.example.sidebartest.ui.slideshow.SlideshowFragment;
 import com.example.sidebartest.ui.tools.ToolsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -77,15 +79,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case (R.id.nav_gallery):
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.nav_host_fragment, new ToolsFragment(), "UHUUUU")
+                        .replace(R.id.nav_host_fragment, new ToolsFragment())
                         .commit();
                 break;
 
-            case R.id.nav_slideshow:
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.nav_host_fragment, new ToolsFragment(), "UHUUUU2")
-                        .commit();
+            case (R.id.nav_slideshow):
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new SlideshowFragment()).commit();
                 break;
         }
         return false;

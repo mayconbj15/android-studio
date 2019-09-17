@@ -7,64 +7,50 @@
     tools:context=".FragmentAdivinha">
 
     <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="411dp"
-        android:layout_height="318dp"
-        android:layout_marginTop="85dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageViewGenius"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            app:srcCompat="@drawable/genio" />
-
-        <ImageView
-            android:id="@+id/imageViewThought"
-            android:layout_width="306dp"
-            android:layout_height="199dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="-30dp"
-            app:srcCompat="@drawable/pensamento" />
-
-        <TextView
-            android:id="@+id/textViewResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="250dp"
-            android:layout_marginTop="40dp"
-            android:textSize="24sp" />
-
-    </FrameLayout>
-
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageViewGenius"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="66dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        android:layout_gravity="center"
+        android:layout_marginTop="0dp"
+        app:srcCompat="@drawable/genio" />
 
-        <EditText
-            android:id="@+id/editTextNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Descubra o número"
-            android:inputType="number" />
+    <ImageView
+        android:id="@+id/imageViewThought"
+        android:layout_width="306dp"
+        android:layout_height="199dp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/pensamento" />
 
-        <Button
-            android:id="@+id/buttonText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TESTAR" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="130dp"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="150dp"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Descubra o número"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/buttonText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:gravity="center"
+        android:text="@string/testar" />
 
 
 </FrameLayout>
