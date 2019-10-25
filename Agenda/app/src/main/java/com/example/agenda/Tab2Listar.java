@@ -3,12 +3,14 @@ package com.example.agenda;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,10 +31,12 @@ public class Tab2Listar extends Fragment
     private ListView listView;
     private Button botaoAtualizar;
     private ArrayAdapter<Contato> adapter;
-    private List<Contato> contatos;
+
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference contatosReference = FirebaseDatabase.getInstance().getReference().child("contatos");
+
+    private List<Contato> contatos = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -41,7 +45,7 @@ public class Tab2Listar extends Fragment
 
         inicializarComponentes(rootView);
 
-        contatos = recuperarUsuarios();
+        recuperarUsuarios();
 
         adapter = new ArrayAdapter<Contato>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, contatos);
 
@@ -53,66 +57,39 @@ public class Tab2Listar extends Fragment
             @Override
             public void onClick(View v)
             {
-                contatos = recuperarUsuarios();
-                adapter = new ArrayAdapter<Contato>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, contatos);
-                listView.setAdapter(adapter);
+                recuperarUsuarios();
+
             }
         });
 
         return rootView;
     }
 
-    private List<Contato> recuperarUsuarios(){
-        final List<Contato> contatos = new ArrayList<Contato>();
+    private void recuperarUsuarios(){
         contatosReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.i("ATUALIZAR: ", "MAN");
                 for(DataSnapshot data : dataSnapshot.getChildren()){
                     Contato contato = data.getValue(Contato.class);
 
+                    Log.i("ATUALIZAR: ", "nome " + contato.getNome());
+                    Log.i("ATUALIZAR: ", "email " + contato.getEmail());
+
                     contatos.add(contato);
+
+                    adapter = new ArrayAdapter<Contato>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, contatos);
+                    listView.setAdapter(adapter);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getContext().getApplicationContext(), "Erro na busca no banco de dados", Toast.LENGTH_SHORT).show();
             }
-        })
+        });
+
     }
-
-    private List<Contato> listarUsuarios()
-    {
-        Contato contato;
-        List<Contato> contatos = new ArrayList<Contato>();
-        /*try
-        {
-            SQLiteDatabase bancoDeDados = getContext().getApplicationContext().openOrCreateDatabase("bancoContatos" , MODE_PRIVATE, null);
-            //recuperar dados da tabela
-            Cursor cursor = bancoDeDados.rawQuery("SELECT id, nome, email FROM Contato", null);
-
-            //recuperando o índice das colunas (o primeiro campo é 0, o segundo é 1)
-            int indiceId = cursor.getColumnIndex("id");
-            int indiceNome = cursor.getColumnIndex("nome");
-            int indiceEmail = cursor.getColumnIndex("email");
-
-            //o cursos se move do primeiro item ao último a medida em que a leitura ocorre
-            cursor.moveToFirst();
-            while (cursor != null)
-            {
-                contato = new Contato (cursor.getString(indiceNome), cursor.getString(indiceEmail));
-                contatos.add(contato);
-                contato = null;
-                cursor.moveToNext(); //move para o próximo registro
-            }
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }*/
-        return contatos;
-
-    }//end recuperarUsuarios()
 
     private void inicializarComponentes(View rootView){
         botaoAtualizar = rootView.findViewById(R.id.button_atualizar2);

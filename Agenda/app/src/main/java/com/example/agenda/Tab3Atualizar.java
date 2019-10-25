@@ -62,7 +62,7 @@ public class Tab3Atualizar extends Fragment
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                Toast.makeText(getContext().getApplicationContext(), "Erro na busca no banco de dados", Toast.LENGTH_SHORT).show();
             }
         });
 
