@@ -58,7 +58,6 @@ public class Tab2Listar extends Fragment
             public void onClick(View v)
             {
                 recuperarUsuarios();
-
             }
         });
 
@@ -69,12 +68,8 @@ public class Tab2Listar extends Fragment
         contatosReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("ATUALIZAR: ", "MAN");
                 for(DataSnapshot data : dataSnapshot.getChildren()){
                     Contato contato = data.getValue(Contato.class);
-
-                    Log.i("ATUALIZAR: ", "nome " + contato.getNome());
-                    Log.i("ATUALIZAR: ", "email " + contato.getEmail());
 
                     contatos.add(contato);
 
@@ -96,4 +91,4 @@ public class Tab2Listar extends Fragment
         listView = rootView.findViewById(R.id.listView_id);
     }
 
-}//end class Tab2Listar
+}

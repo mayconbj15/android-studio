@@ -21,6 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class Tab3Atualizar extends Fragment
@@ -34,6 +39,10 @@ public class Tab3Atualizar extends Fragment
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference contatosReference = FirebaseDatabase.getInstance().getReference().child("contatos");
+
+    private HashMap<String,Contato> contatos = new HashMap<>();
+
+    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -49,15 +58,12 @@ public class Tab3Atualizar extends Fragment
         contatosReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("dataChange", "data change man");
-
-                for(DataSnapshot data : dataSnapshot.getChildren()){
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Contato contato = data.getValue(Contato.class);
 
-                    Log.i("log", "nome " + contato.getNome());
-                    Log.i("log", "email " + contato.getEmail());
+                    if (!contatos.containsValue(contato))
+                        contatos.put(contato.getNome(), contato);
                 }
-
             }
 
             @Override
@@ -71,20 +77,10 @@ public class Tab3Atualizar extends Fragment
             @Override
             public void onClick(View v)
             {
-
                 String nome = editTextNome.getText().toString();
-                String email = editTextEmail.getText().toString();
 
-                Contato contato = recuperarUsuarios(nome, email);
+                recuperarUsuario(nome);
 
-
-                if (contato != null)
-                {
-                    editTextNome.setText(contato.getNome());
-                    editTextEmail.setText(contato.getEmail());
-                }
-                else
-                    Toast.makeText(getContext().getApplicationContext(), "Usuário não encontrado.", Toast.LENGTH_SHORT).show();
             }
 
 
@@ -98,18 +94,7 @@ public class Tab3Atualizar extends Fragment
                 String nome = editTextNome.getText().toString();
                 String email = editTextEmail.getText().toString();
 
-                if(!nome.equals("") && !email.equals("")){
-                    Contato contato = new Contato();
-                    contato.setNome(nome);
-                    contato.setEmail(email);
-
-                    atualizaUsuarios (contato);
-                    Toast.makeText(getContext().getApplicationContext(), "Atualizado com sucesso", Toast.LENGTH_SHORT).show();
-                    editTextNome.setText("");
-                    editTextEmail.setText("");
-                }
-                else
-                    Toast.makeText(getContext().getApplicationContext(), "Favor preencher os campos", Toast.LENGTH_SHORT).show();
+                atualizaUsuario(nome, email);
             }
         });
 
@@ -134,32 +119,43 @@ public class Tab3Atualizar extends Fragment
         return rootView;
     }
 
-    private Contato recuperarUsuarios (String nome, String email) {
-        Contato contato = new Contato();
-        contato.setNome(nome);
-        contato.setEmail(email);
+    private Contato recuperarUsuario(String nome) {
+        Contato contato = contatos.get(nome);
 
-        String text = databaseReference.child("contatos").equalTo("nome").toString();
-        //databaseReference.child("contatos").equalTo(nome, "nome").
-
-        //Contato contato = new Contato(nome,nome);
+        if (contato != null)
+        {
+            editTextNome.setText(contato.getNome());
+            editTextEmail.setText(contato.getEmail());
+        }
+        else
+            Toast.makeText(getContext().getApplicationContext(), "Usuário não encontrado.", Toast.LENGTH_SHORT).show();
 
         return contato;
     }
 
-    private void atualizaUsuarios (Contato contato)
+    private void atualizaUsuario(String nome, String email)
     {
-        /*try
-        {
-            SQLiteDatabase bancoDeDados = getContext().getApplicationContext().openOrCreateDatabase("bancoContatos" , MODE_PRIVATE, null);
-            String update = "UPDATE Contato " + "SET nome = '" + contato.getNome() + "', " + "email = '" + contato.getEmail() + "' " + "WHERE id = " + contato.getId();
-            bancoDeDados.execSQL(update);
+        if(!nome.equals("") && !email.equals("")){
+            Contato contato = new Contato();
+            contato.setNome(nome);
+            contato.setEmail(email);
+
+            atualizaFirebase(contato);
+
+            Toast.makeText(getContext().getApplicationContext(), "Atualizado com sucesso", Toast.LENGTH_SHORT).show();
+            editTextNome.setText("");
+            editTextEmail.setText("");
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }*/
+        else
+            Toast.makeText(getContext().getApplicationContext(), "Favor preencher os campos", Toast.LENGTH_SHORT).show();
     }//end atualizaUsuarios()
+
+    private void atualizaFirebase(Contato contato){
+        Map<String, Object> update = new HashMap<>();
+        update.put(contato.getNome(), contato);
+
+        contatosReference.updateChildren(update);
+    }
 
     private void deleteUsuarios (int id)
     {
