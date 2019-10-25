@@ -3,6 +3,7 @@ package com.example.agenda;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class Tab3Atualizar extends Fragment
     private EditText editTextUserId;
 
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+    private DatabaseReference contatosReference = FirebaseDatabase.getInstance().getReference().child("contatos");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -44,6 +46,26 @@ public class Tab3Atualizar extends Fragment
         buttonDeletar = rootView.findViewById((R.id.button_delete_id));
         editTextUserId = rootView.findViewById(R.id.id_edit_text3);
 
+        contatosReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.i("dataChange", "data change man");
+
+                for(DataSnapshot data : dataSnapshot.getChildren()){
+                    Contato contato = data.getValue(Contato.class);
+
+                    Log.i("log", "nome " + contato.getNome());
+                    Log.i("log", "email " + contato.getEmail());
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         buttonBuscar.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -51,7 +73,10 @@ public class Tab3Atualizar extends Fragment
             {
 
                 String nome = editTextNome.getText().toString();
-                Contato contato = recuperarUsuarios(nome);
+                String email = editTextEmail.getText().toString();
+
+                Contato contato = recuperarUsuarios(nome, email);
+
 
                 if (contato != null)
                 {
@@ -74,7 +99,9 @@ public class Tab3Atualizar extends Fragment
                 String email = editTextEmail.getText().toString();
 
                 if(!nome.equals("") && !email.equals("")){
-                    Contato contato = new Contato(nome, email);
+                    Contato contato = new Contato();
+                    contato.setNome(nome);
+                    contato.setEmail(email);
 
                     atualizaUsuarios (contato);
                     Toast.makeText(getContext().getApplicationContext(), "Atualizado com sucesso", Toast.LENGTH_SHORT).show();
@@ -107,18 +134,22 @@ public class Tab3Atualizar extends Fragment
         return rootView;
     }
 
-    private Contato recuperarUsuarios (String nome) {
+    private Contato recuperarUsuarios (String nome, String email) {
+        Contato contato = new Contato();
+        contato.setNome(nome);
+        contato.setEmail(email);
+
         String text = databaseReference.child("contatos").equalTo("nome").toString();
         //databaseReference.child("contatos").equalTo(nome, "nome").
 
-        Contato contato = new Contato(nome,nome);
+        //Contato contato = new Contato(nome,nome);
 
         return contato;
     }
 
     private void atualizaUsuarios (Contato contato)
     {
-        try
+        /*try
         {
             SQLiteDatabase bancoDeDados = getContext().getApplicationContext().openOrCreateDatabase("bancoContatos" , MODE_PRIVATE, null);
             String update = "UPDATE Contato " + "SET nome = '" + contato.getNome() + "', " + "email = '" + contato.getEmail() + "' " + "WHERE id = " + contato.getId();
@@ -127,7 +158,7 @@ public class Tab3Atualizar extends Fragment
         catch(Exception e)
         {
             e.printStackTrace();
-        }
+        }*/
     }//end atualizaUsuarios()
 
     private void deleteUsuarios (int id)

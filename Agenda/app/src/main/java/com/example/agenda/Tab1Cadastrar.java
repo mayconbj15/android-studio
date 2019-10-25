@@ -1,6 +1,5 @@
 package com.example.agenda;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +10,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class Tab1Cadastrar extends Fragment
 {
@@ -36,19 +32,7 @@ public class Tab1Cadastrar extends Fragment
             @Override
             public void onClick(View view)
             {
-                String nome = editTextNome.getText().toString();
-                String email = editTextEmail.getText().toString();
-                if ((!nome.equals("")) && (!email.equals("")))
-                {
-                    Contato pessoa = new Contato(nome, email);
-                    cadastrarUsuarios(pessoa);
-                    Toast.makeText(getContext().getApplicationContext(), "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(getContext().getApplicationContext(), "Campos vazios", Toast.LENGTH_SHORT).show();
-
-                editTextNome.setText("");
-                editTextEmail.setText("");
+                cadastrarUsuarios();
             }
         });
         
@@ -67,10 +51,27 @@ public class Tab1Cadastrar extends Fragment
         return rootView;
     }
 
+    private void cadastrarUsuarios(){
+        String nome = editTextNome.getText().toString();
+        String email = editTextEmail.getText().toString();
+
+        if ((!nome.equals("")) && (!email.equals("")))
+        {
+            Contato pessoa = new Contato();
+            pessoa.setNome(nome);
+            pessoa.setEmail(email);
+
+            cadastrarUsuarios(pessoa);
+            Toast.makeText(getContext().getApplicationContext(), "Cadastrado com sucesso", Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(getContext().getApplicationContext(), "Campos vazios", Toast.LENGTH_SHORT).show();
+
+        editTextNome.setText("");
+        editTextEmail.setText("");
+    }
     private void cadastrarUsuarios (Contato pessoa)
     {
-        databaseReference.child("contatos").push().child("nome").setValue(pessoa.getNome());
-        databaseReference.child("contatos").push().child("email").setValue(pessoa.getEmail());
-        String key = databaseReference.child("contatos").push().getParent().getKey();
+        databaseReference.child("contatos").push().setValue(pessoa);
     }
 }
