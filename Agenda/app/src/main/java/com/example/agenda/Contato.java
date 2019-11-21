@@ -5,10 +5,19 @@ public class Contato
     private String nome;
     private String email;
     private String key;
+    private String cep;
+    private String endereco;
 
    public Contato(){
 
    }
+
+    public Contato(String nome, String email, String cep, String endereco) {
+        this.nome = nome;
+        this.email = email;
+        this.cep = cep;
+        this.endereco = endereco;
+    }
 
     @Override
     public String toString()
@@ -30,6 +39,23 @@ public class Contato
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public String getKey() {

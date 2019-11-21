@@ -36,7 +36,7 @@ public class Tab2Listar extends Fragment
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference contatosReference = FirebaseDatabase.getInstance().getReference().child("contatos");
 
-    private List<Contato> contatos = new ArrayList<>();
+    private List<Contato> contatos;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -47,7 +47,8 @@ public class Tab2Listar extends Fragment
 
         recuperarUsuarios();
 
-        adapter = new ArrayAdapter<Contato>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, contatos);
+        clearList();
+        //adapter = new ArrayAdapter<Contato>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, contatos);
 
         //O listView não pode adicnar um tipo List, mas podemos adicionar um tipo adapter (que contem nossa lista de contatos)
         listView.setAdapter(adapter);
@@ -68,6 +69,7 @@ public class Tab2Listar extends Fragment
         contatosReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                clearList();
                 for(DataSnapshot data : dataSnapshot.getChildren()){
                     Contato contato = data.getValue(Contato.class);
 
@@ -84,6 +86,11 @@ public class Tab2Listar extends Fragment
             }
         });
 
+    }
+
+    private void clearList(){
+        contatos = new ArrayList<>();
+        adapter = new ArrayAdapter<Contato>(getContext().getApplicationContext(), android.R.layout.simple_list_item_1, contatos);
     }
 
     private void inicializarComponentes(View rootView){
